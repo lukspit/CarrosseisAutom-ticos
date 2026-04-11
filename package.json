@@ -1,0 +1,13 @@
+{
+  "name": "carousel-engine",
+  "version": "1.0.0",
+  "description": "Gerador de carrosséis profissionais para Instagram — powered by Claude Code",
+  "private": true,
+  "scripts": {
+    "render": "node scripts/renderizar.js",
+    "deliver": "node scripts/entregar.js"
+  },
+  "dependencies": {
+    "puppeteer": "^22.0.0"
+  }
+}

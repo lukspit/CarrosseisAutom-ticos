@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install*)",
+      "Bash(npm init*)",
+      "Bash(node scripts/renderizar.js*)",
+      "Bash(node scripts/entregar.js*)",
+      "Bash(npx puppeteer*)",
+      "Bash(ls*)",
+      "Bash(mkdir*)",
+      "Bash(node -e*)",
+      "Bash(cat config/.env*)"
+    ]
+  }
+}
