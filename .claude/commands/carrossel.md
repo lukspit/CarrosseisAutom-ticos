@@ -29,6 +29,8 @@ Leia silenciosamente (sem dizer ao usuário que está lendo):
 - `marca/sistema-visual.css`
 - `pesquisa/instagram-framework.md`
 
+Verifique também: `ls marca/foto.* 2>/dev/null` — existe foto de perfil? Guarde esse estado (sim ou não) para usar no Passo 5.
+
 Absorva: identidade da marca, tokens visuais, o que funciona no Instagram.
 
 ### Passo 2 — Confirmação do tema e objetivo
@@ -90,6 +92,40 @@ Para cada slide, gere um arquivo HTML completo e self-contained.
 - Layout: composição nova para este carrossel, baseada nos padrões de `instagram-framework.md`
 - Dimensão do conteúdo: todo o conteúdo deve caber em 1080x1350 sem scroll
 - Texto: mínimo necessário. Se precisar de mais de 3 linhas densas, corte
+
+**Foto de perfil no slide final:**
+Se a foto de perfil existir (`marca/foto.*`), o slide final (CTA) deve incluir:
+- Imagem circular da foto com `src="__FOTO_PERFIL__"` — o `renderizar.js` injeta o base64 automaticamente
+- Nome da marca abaixo da foto, em tamanho menor
+- Posicionamento: canto inferior esquerdo ou centralizado acima da CTA, dependendo do layout
+
+Exemplo de elemento de assinatura:
+```html
+<div class="assinatura">
+  <img src="__FOTO_PERFIL__" alt="foto" class="foto-perfil">
+  <span class="nome-marca">Nome da Marca</span>
+</div>
+```
+```css
+.assinatura {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.foto-perfil {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.nome-marca {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+```
+
+Se a foto **não** existir: gere o slide final sem o elemento de assinatura. Não mencione isso ao usuário.
 
 **Estrutura base de cada HTML:**
 

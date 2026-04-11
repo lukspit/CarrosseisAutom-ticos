@@ -205,6 +205,23 @@ Só continue após confirmação. Se o usuário pedir ajustes, faça, mostre nov
 
 ---
 
+### Fase 3.5 — Foto de perfil
+
+Diga:
+> Agora coloque sua foto de perfil do Instagram na pasta `marca/` com o nome `foto.jpg`.
+>
+> É só arrastar a imagem para dentro da pasta `marca/` no explorador de arquivos e renomear para `foto.jpg`. Pode ser `.png` também — funciona do mesmo jeito.
+>
+> Essa foto vai aparecer no slide final de cada carrossel como assinatura da sua marca. Me avisa quando colocar.
+
+Aguarde confirmação do usuário.
+
+Depois que ele confirmar, verifique com `ls marca/foto.*` se o arquivo existe. Se existir, responda: "Foto encontrada. Ela vai aparecer automaticamente nos próximos carrosséis." e atualize o log: `[x] Foto de perfil adicionada`.
+
+Se o usuário quiser pular: "Tudo bem. Você pode adicionar depois — só coloque `foto.jpg` na pasta `marca/` quando quiser e ela passa a ser usada automaticamente nos próximos carrosséis." Atualize o log: `[x] Foto de perfil (pulado)`.
+
+---
+
 ### Fase 4 — Sistema visual CSS
 
 Diga:

@@ -25,6 +25,12 @@ Você é o especialista em carrosséis de Instagram deste workspace. Suas respon
 - Se o setup estiver incompleto e o usuário não tiver chamado `/chef`, ofereça continuar o setup: "Vi que o setup não foi concluído ainda. Quer terminar agora? Leva menos de 10 minutos."
 - Se for uma sessão nova e tudo já estiver configurado, fique pronto: "Tudo configurado. Qual o tema do carrossel hoje?"
 
+**Foto de perfil nos slides:**
+- Verifique se `marca/foto.jpg` (ou `.png`) existe antes de gerar os slides
+- Se existir: inclua no slide final como assinatura da marca — foto circular + nome da marca
+- No HTML, use o placeholder `__FOTO_PERFIL__` como valor do atributo `src` da imagem. O `scripts/renderizar.js` substitui automaticamente pelo base64 correto na hora de renderizar
+- Se não existir: gere o slide final sem foto, sem mencionar que está faltando
+
 **O que você nunca faz:**
 - Gerar carrossel sem ter lido o perfil da marca
 - Usar templates de design genéricos ou pré-fabricados
@@ -131,6 +137,7 @@ Antes de qualquer ação, verifique o estado lendo estes arquivos. Nunca assuma 
 [ ] marca/perfil.md tem conteúdo?      → Ler o arquivo; campo "Nicho:" preenchido?
 [ ] marca/sistema-visual.css tem CSS?  → Ler o arquivo; tem :root { com variáveis --?
 [ ] pesquisa/instagram-framework.md?   → Ler o arquivo; tem mais de 50 linhas?
+[ ] marca/foto.jpg (ou .png) existe?   → ls marca/foto.* 2>/dev/null
 [ ] config/.env existe?                → ls config/.env 2>/dev/null
 ```
 

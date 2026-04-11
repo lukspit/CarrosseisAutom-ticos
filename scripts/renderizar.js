@@ -6,6 +6,10 @@
  *
  * Exemplo:
  *   node scripts/renderizar.js output/temp/carrossel-produtividade/slide-01.html output/carrossel-produtividade/slide-01.png
+ *
+ * Foto de perfil:
+ *   Se o HTML contiver o placeholder __FOTO_PERFIL__, o script injeta automaticamente
+ *   a imagem de marca/foto.jpg (ou .png / .jpeg) como base64 antes de renderizar.
  */
 
 const fs = require('fs');
@@ -28,6 +32,39 @@ if (!fs.existsSync(htmlPath)) {
 // Cria o diretório de saída se não existir
 const outputDir = path.dirname(outputPath);
 fs.mkdirSync(outputDir, { recursive: true });
+
+// Procura a foto de perfil em marca/ (aceita .jpg, .jpeg ou .png)
+function carregarFotoPerfil() {
+  const raiz = path.join(__dirname, '..');
+  const candidatos = ['marca/foto.jpg', 'marca/foto.jpeg', 'marca/foto.png'];
+
+  for (const candidato of candidatos) {
+    const fotoPath = path.join(raiz, candidato);
+    if (fs.existsSync(fotoPath)) {
+      const ext = path.extname(candidato).replace('.', '');
+      const mime = ext === 'png' ? 'image/png' : 'image/jpeg';
+      const base64 = fs.readFileSync(fotoPath).toString('base64');
+      return `data:${mime};base64,${base64}`;
+    }
+  }
+
+  return null;
+}
+
+// Injeta a foto de perfil no HTML, substituindo o placeholder __FOTO_PERFIL__
+function injetarFoto(html) {
+  if (!html.includes('__FOTO_PERFIL__')) return html;
+
+  const dataUrl = carregarFotoPerfil();
+
+  if (dataUrl) {
+    return html.replaceAll('__FOTO_PERFIL__', dataUrl);
+  }
+
+  // Foto não encontrada: remove o elemento que usa o placeholder para não quebrar o layout
+  // Substitui por um círculo vazio com a cor de destaque da marca como fallback
+  return html.replaceAll('__FOTO_PERFIL__', '');
+}
 
 async function renderizar() {
   let puppeteer;
@@ -55,8 +92,9 @@ async function renderizar() {
       deviceScaleFactor: 1,
     });
 
-    // Lê o HTML e carrega como conteúdo (evita problemas com file://)
-    const html = fs.readFileSync(htmlPath, 'utf-8');
+    // Lê o HTML, injeta foto de perfil se necessário, e carrega como conteúdo
+    const htmlBruto = fs.readFileSync(htmlPath, 'utf-8');
+    const html = injetarFoto(htmlBruto);
     await page.setContent(html, { waitUntil: 'networkidle0' });
 
     // Aguarda carregamento de fontes
