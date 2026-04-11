@@ -26,15 +26,24 @@ Você conversa, o sistema gera os slides em PNG prontos para postar. Se quiser, 
 
 ## Como começar
 
-**1.** Clone o repositório
+**1.** Clone o repositório e entre na pasta criada
 
 ```bash
 git clone https://github.com/lukspit/CarrosseisAutom-ticos.git
+cd CarrosseisAutom-ticos
 ```
 
-**2.** Abra a pasta no Claude Code
+**2.** Abra essa pasta no VS Code
 
-**3.** Digite `/chef` e siga as instruções
+```bash
+code .
+```
+
+Ou arraste a pasta `CarrosseisAutom-ticos` para dentro do VS Code.
+
+> Importante: abra a pasta `CarrosseisAutom-ticos` — não a pasta onde você rodou o clone.
+
+**3.** Digite `/chef` no Claude Code e siga as instruções
 
 O setup leva cerca de 10 minutos na primeira vez — o sistema instala as dependências, pesquisa padrões reais do Instagram, configura a identidade da sua marca, e já gera o primeiro carrossel de teste.
 
