@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Back-left slide (fanned -30°) -->
+  <g transform="translate(50,68) rotate(-30) translate(0,-16)">
+    <rect x="-13" y="-16" width="26" height="32" rx="3" fill="#D97757" opacity="0.35"/>
+  </g>
+
+  <!-- Back-right slide (fanned +30°) -->
+  <g transform="translate(50,68) rotate(30) translate(0,-16)">
+    <rect x="-13" y="-16" width="26" height="32" rx="3" fill="#D97757" opacity="0.35"/>
+  </g>
+
+  <!-- Front-center slide -->
+  <g transform="translate(50,68) translate(0,-16)">
+    <rect x="-13" y="-16" width="26" height="32" rx="3" fill="#D97757"/>
+  </g>
+</svg>
