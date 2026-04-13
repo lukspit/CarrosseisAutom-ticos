@@ -299,9 +299,22 @@ TELEGRAM_CHAT_ID=chat_id_aqui
 
 Se houver erro 403: "O bot precisa ter recebido uma mensagem sua primeiro. Manda um 'oi' para ele no Telegram e tenta de novo."
 
+**Passo 5 — Bot de requisição (opcional, recomendado):**
+
+Diga:
+> Com o mesmo bot que você acabou de criar, você também pode **pedir carrosséis diretamente pelo Telegram** — manda uma ideia, um link ou uma transcrição de vídeo, e ele gera e devolve os slides no próprio chat. Quer ativar isso?
+
+Se sim:
+> Rode este comando no terminal do projeto e deixe rodando em background:
+> `node scripts/bot.js`
+> A partir daí, mande qualquer mensagem para o seu bot no Telegram e ele vai gerar o carrossel e te devolver os slides. Para manter rodando mesmo com o terminal fechado, use: `nohup node scripts/bot.js &`
+
+Se não:
+> Tudo bem — você continua gerando carrosséis pelo Claude Code e recebendo via Telegram normalmente.
+
 Atualize o log: `[x] Telegram configurado`.
 
-**Se o usuário disser não:**
+**Se o usuário disser não (à pergunta inicial do Telegram):**
 
 Diga: "Tudo bem. Os carrosséis vão para a pasta `output/` do projeto. Você pode configurar o Telegram depois usando o comando `/entregar`."
 
