@@ -186,31 +186,31 @@ function detectarNovosSlides(inicioMs) {
 // Processamento de mensagens
 // ---------------------------------------------------------------------------
 
-const BRAND_CONTEXT = `
-IDENTIDADE VISUAL OBRIGATÓRIA (use exatamente estas cores, sem exceção):
-- Fundo: #0a0a0a
-- Acento / cor principal: #D97757
-- Texto primário: #e5e2e1
-- Texto suave: #dbc1b9
-- Superfície de cards: #131313
-- Bordas: rgba(217,119,87,0.15) a rgba(217,119,87,0.25)
-- Fonte de títulos: Space Grotesk 700 (import Google Fonts)
-- Fonte de corpo: Inter 300/400/500 (import Google Fonts)
-- Slide: 1080x1350px
-- Padding horizontal: 80px
-- Linha topo: 4px sólida #D97757
-- Grid de fundo: linhas rgba(217,119,87,0.035) a cada 80px
-- Foto de perfil: use src="__FOTO_PERFIL__" — NÃO use caminho de arquivo
-- Arroba: @lucaspit.ai
-- Zero emojis em qualquer slide
-`;
+// Lê marca/perfil.md em runtime para injetar no prompt
+function lerPerfil() {
+  const perfilPath = path.join(ROOT, 'marca', 'perfil.md');
+  if (!fs.existsSync(perfilPath)) return '';
+  try {
+    return fs.readFileSync(perfilPath, 'utf-8').trim();
+  } catch {
+    return '';
+  }
+}
 
 function montarPrompt(conteudo) {
   const isUrl = /^https?:\/\//i.test(conteudo.trim());
+  const perfil = lerPerfil();
 
   const instrucoes = `
 Leia CLAUDE.md, marca/perfil.md e pesquisa/instagram-framework.md antes de gerar.
-${BRAND_CONTEXT}
+
+REGRAS DE DESIGN OBRIGATÓRIAS:
+- Use exatamente as cores, fontes e identidade definidas em marca/perfil.md e marca/sistema-visual.css
+- Slide: 1080x1350px
+- Foto de perfil: use src="__FOTO_PERFIL__" no atributo src — nunca um caminho de arquivo local
+- Zero emojis em qualquer slide
+${perfil ? `\nPERFIL DA MARCA:\n${perfil}` : ''}
+
 Renderiza cada slide com: node scripts/renderizar.js <html> <output/carrossel-[slug]/slide-0N.png>
 Confirma os arquivos gerados ao final. Execute sem fazer perguntas.`;
 
@@ -219,7 +219,7 @@ Confirma os arquivos gerados ao final. Execute sem fazer perguntas.`;
 
 ${conteudo}
 
-Busca o conteúdo, extrai os pontos mais relevantes para criadores de conteúdo e IA, e gera um carrossel completo.
+Busca o conteúdo, analisa os pontos mais relevantes para o público definido em marca/perfil.md e gera um carrossel completo.
 ${instrucoes}`;
   }
 
@@ -227,7 +227,7 @@ ${instrucoes}`;
 
 "${conteudo}"
 
-Desenvolve o ângulo mais forte para criadores de conteúdo e IA.
+Desenvolve o ângulo mais forte para o público definido em marca/perfil.md.
 ${instrucoes}`;
 }
 
