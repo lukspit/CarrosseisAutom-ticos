@@ -1,4 +1,32 @@
-/* Sistema Visual
- * Gerado automaticamente pelo Carousel Engine durante o setup.
- * Para atualizar, use o comando /marca no Claude Code.
+/* Sistema Visual — [Nome da Marca]
+ * Tokens de design usados em todos os slides gerados.
+ * Gerado automaticamente pelo comando /marca no Claude Code.
+ * Para atualizar, use /marca — não edite este arquivo manualmente.
  */
+
+:root {
+  /* Cores — preencha via /marca ou edite diretamente */
+  --bg:              #0a0a0a;
+  --surface:         #111111;
+  --accent:          #3b82f6;
+  --accent-rgb:      59, 130, 246;
+  --text-primary:    #f5f5f5;
+  --text-secondary:  #a3a3a3;
+  --border:          rgba(59, 130, 246, 0.15);
+  --border-strong:   rgba(59, 130, 246, 0.25);
+  --grid-line:       rgba(59, 130, 246, 0.035);
+
+  /* Tipografia */
+  --font-heading:    'Space Grotesk', system-ui, sans-serif;
+  --font-body:       'Inter', system-ui, sans-serif;
+
+  /* Tamanhos de slide — não altere */
+  --slide-w:         1080px;
+  --slide-h:         1350px;
+  --padding-x:       80px;
+  --padding-y:       120px;
+
+  /* Foto de perfil */
+  --foto-size:       110px;
+  --foto-border:     3px solid var(--accent);
+}
