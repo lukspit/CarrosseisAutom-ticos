@@ -3,10 +3,11 @@ config/.env
 output/*
 !output/.gitkeep
 
-# Arquivos de marca (conteúdo pessoal do usuário — não versionar)
-marca/foto.jpg
-marca/foto.png
-marca/logo-*.png
+# Arquivos de marca (gerados pelo /chef — conteúdo pessoal do usuário)
+marca/*.md
+marca/*.css
+marca/*.jpg
+marca/*.png
 
 # Temporários e sistema
 slides-temp/
