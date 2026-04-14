@@ -283,13 +283,32 @@ Guie passo a passo:
 
 Aguarde o token. Valide o formato (deve ser `123456789:ABCDEFGHabcdefgh...`). Se inválido, peça para confirmar.
 
-**Passo 2:** "Agora mande qualquer mensagem para o seu bot (procure pelo nome que você escolheu). Depois copie e cole esta URL no seu navegador, substituindo TOKEN pelo token que você me mandou:
-`https://api.telegram.org/botTOKEN/getUpdates`
-Me mande o conteúdo que aparecer."
+**Passo 2:** Diga: "Agora mande qualquer mensagem para o seu bot no Telegram — pode ser um 'oi'. Pode ser rápido, só preciso confirmar que ele recebeu."
 
-Extraia o `chat_id` do JSON retornado (`result[0].message.chat.id`). Se o campo estiver vazio, instrua o usuário a mandar uma mensagem para o bot primeiro.
+Quando o usuário confirmar que mandou, execute você mesmo a chamada à API do Telegram para buscar o chat_id:
 
-**Passo 3:** Escreva `config/.env` com:
+```bash
+node -e "
+const https = require('https');
+const token = 'TOKEN_DO_USUARIO';
+https.get('https://api.telegram.org/bot' + token + '/getUpdates', (res) => {
+  let d = '';
+  res.on('data', c => d += c);
+  res.on('end', () => {
+    const r = JSON.parse(d);
+    if (r.result && r.result.length > 0) {
+      console.log('chat_id:', r.result[0].message.chat.id);
+    } else {
+      console.log('Nenhuma mensagem encontrada ainda');
+    }
+  });
+});
+"
+```
+
+Substitua `TOKEN_DO_USUARIO` pelo token recebido no Passo 1. Se o resultado for "Nenhuma mensagem encontrada", peça para o usuário mandar a mensagem no Telegram e execute de novo.
+
+**Passo 3:** Escreva `config/.env` com o token e o chat_id extraído:
 ```
 TELEGRAM_TOKEN=token_aqui
 TELEGRAM_CHAT_ID=chat_id_aqui
@@ -297,17 +316,26 @@ TELEGRAM_CHAT_ID=chat_id_aqui
 
 **Passo 4:** Execute `node scripts/entregar.js --teste` para verificar a conexão. Se funcionar, informe: "Telegram configurado. Você vai receber os próximos carrosséis direto aqui."
 
-Se houver erro 403: "O bot precisa ter recebido uma mensagem sua primeiro. Manda um 'oi' para ele no Telegram e tenta de novo."
+Se houver erro 403: execute `node scripts/entregar.js --teste` de novo — pode ser que o bot ainda não processou a mensagem.
 
 **Passo 5 — Bot de requisição (opcional, recomendado):**
 
 Diga:
 > Com o mesmo bot que você acabou de criar, você também pode **pedir carrosséis diretamente pelo Telegram** — manda uma ideia, um link ou uma transcrição de vídeo, e ele gera e devolve os slides no próprio chat. Quer ativar isso?
 
-Se sim:
-> Rode este comando no terminal do projeto e deixe rodando em background:
-> `node scripts/bot.js`
-> A partir daí, mande qualquer mensagem para o seu bot no Telegram e ele vai gerar o carrossel e te devolver os slides. Para manter rodando mesmo com o terminal fechado, use: `nohup node scripts/bot.js &`
+Se sim: execute você mesmo o comando a seguir para iniciar o bot em background (continua rodando mesmo com o terminal fechado):
+
+```bash
+nohup node scripts/bot.js > /tmp/bot-carrossel.log 2>&1 &
+```
+
+Depois confirme que iniciou verificando o log:
+
+```bash
+sleep 2 && cat /tmp/bot-carrossel.log | head -5
+```
+
+Se aparecer "Bot ... iniciado. Aguardando mensagens...", diga: "Bot ativado. Agora você pode pedir carrosséis direto pelo Telegram — manda uma ideia ou link para o bot e ele gera e te devolve os slides."
 
 Se não:
 > Tudo bem — você continua gerando carrosséis pelo Claude Code e recebendo via Telegram normalmente.
