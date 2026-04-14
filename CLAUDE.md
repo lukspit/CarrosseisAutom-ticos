@@ -132,6 +132,9 @@ Nos slides 2–N-1, quebre o ritmo visual com blocos de acento:
 - Ou faixa horizontal com background na cor primária e texto invertido (branco/preto)
 - Cria hierarquia, evita monotonia de texto solto no fundo escuro
 
+**Acentuação: sempre correta no HTML.**
+Todos os slides usam `<meta charset="UTF-8">` — portanto escreva sempre com acentos corretos: "não", "é", "também", "automático", "básico", "requisição". Nunca substitua por versão sem acento.
+
 **HTML gerado: self-contained.**
 Cada arquivo HTML de slide deve funcionar completamente sozinho. CSS inline com `<style>` dentro do `<head>`. Sem imports de arquivos externos (exceto Google Fonts via CDN). Sem JavaScript.
 
