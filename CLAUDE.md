@@ -93,8 +93,44 @@ Por quê: Templates genéricos entregam resultado genérico. O sistema existe pa
 **Tamanho fixo: 1080x1350px (ratio 4:5).**
 Este é o formato nativo do Instagram para carrosséis. Não negocie.
 
+**Tipografia: grande o suficiente para dominar o slide.**
+O slide é visto no celular. Texto pequeno é invisível. Use estas escalas mínimas — nunca abaixo delas:
+- Headline do slide 1 (hook): 96–120px, weight 700–800, line-height 0.95–1.05
+- Títulos dos slides do meio: 72–88px, weight 700
+- Corpo/subtítulo: 32–40px, weight 400–500
+- Labels e contadores: 18–22px, uppercase, letter-spacing amplo
+- Se o texto não couber nessas dimensões, corte palavras — nunca reduza o tamanho
+
 **Mínimo de texto por slide.**
-Se você precisar de mais de 3 linhas para comunicar a ideia do slide, a ideia não está clara o suficiente. Corte. Sintetize. Reformule.
+Se precisar de mais de 3 linhas para comunicar a ideia do slide, a ideia não está clara o suficiente. Corte. Sintetize. Reformule.
+
+**Camada visual: obrigatória em todos os slides.**
+Todo slide deve ter pelo menos estes três elementos visuais além do texto:
+
+1. **Textura de fundo** — grid sutil com `linear-gradient` (opacity 0.03–0.06, tamanho 60–80px). Nunca fundo sólido liso.
+2. **Glow** — pelo menos um `radial-gradient` com a cor primária da marca (opacity 0.08–0.15), posicionado para guiar o olho em direção ao texto principal.
+3. **Linha de acento** — horizontal, vertical ou diagonal (2–4px, cor primária, opacity 0.35–0.6). Pode ser separador, borda lateral de card, ou elemento decorativo.
+
+Outros elementos recomendados (use pelo menos um por slide):
+- Contador de slide no canto superior direito (`01 / 07`)
+- Anéis ou círculos concêntricos ao fundo (border, opacity baixa)
+- Pontos espalhados (dots, 3–6px, opacity 0.15–0.4)
+- Watermark em texto grande e transparente ao fundo (palavra-chave do slide, opacity 0.03–0.06)
+- Colchetes de canto (`┌` `┘`) como moldura sutil
+
+**Elemento ilustrativo SVG (recomendado em slides-chave).**
+Para slides com conceito central claro (segurança, produtividade, sistema, fluxo), gere um SVG inline que representa esse conceito geometricamente. Estética: Stripe/Linear/Vercel — minimalista, geométrico, sem clipart. Exemplos:
+- Segurança: shield com path simples, cadeado geométrico
+- Sistema/fluxo: nós conectados por linhas, diagrama de blocos
+- Dados/resultados: barras, seta ascendente estilizada
+- Processo: círculos conectados, seta em loop
+Tamanho: 100–180px. Posição: canto superior/inferior ou como watermark leve. Cor: primária da marca ou branco com opacity baixa.
+
+**Bloco de cor (slides do meio, não no slide 1 nem no último).**
+Nos slides 2–N-1, quebre o ritmo visual com blocos de acento:
+- Card com `border-left: 5px solid [cor-primária]` sobre fundo levemente mais claro que o fundo principal
+- Ou faixa horizontal com background na cor primária e texto invertido (branco/preto)
+- Cria hierarquia, evita monotonia de texto solto no fundo escuro
 
 **HTML gerado: self-contained.**
 Cada arquivo HTML de slide deve funcionar completamente sozinho. CSS inline com `<style>` dentro do `<head>`. Sem imports de arquivos externos (exceto Google Fonts via CDN). Sem JavaScript.
