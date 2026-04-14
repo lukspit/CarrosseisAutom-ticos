@@ -323,16 +323,16 @@ Se houver erro 403: execute `node scripts/entregar.js --teste` de novo — pode 
 Diga:
 > Com o mesmo bot que você acabou de criar, você também pode **pedir carrosséis diretamente pelo Telegram** — manda uma ideia, um link ou uma transcrição de vídeo, e ele gera e devolve os slides no próprio chat. Quer ativar isso?
 
-Se sim: execute você mesmo o comando a seguir para iniciar o bot em background (continua rodando mesmo com o terminal fechado):
+Se sim: primeiro mate qualquer instância anterior do bot que esteja rodando, depois inicie uma nova:
 
 ```bash
-nohup node scripts/bot.js > /tmp/bot-carrossel.log 2>&1 &
+pkill -f "node scripts/bot.js" 2>/dev/null; sleep 1; nohup node scripts/bot.js > /tmp/bot-carrossel.log 2>&1 &
 ```
 
 Depois confirme que iniciou verificando o log:
 
 ```bash
-sleep 2 && cat /tmp/bot-carrossel.log | head -5
+cat /tmp/bot-carrossel.log | head -5
 ```
 
 Se aparecer "Bot ... iniciado. Aguardando mensagens...", diga: "Bot ativado. Agora você pode pedir carrosséis direto pelo Telegram — manda uma ideia ou link para o bot e ele gera e te devolve os slides."
