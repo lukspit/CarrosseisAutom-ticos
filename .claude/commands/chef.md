@@ -268,7 +268,29 @@ Mostre ao usuário as principais variáveis geradas (cores e fontes). Não peça
 
 ---
 
-### Fase 5 — Telegram (opcional, recomendado)
+### Fase 5 — Configuração de Imagens (Fal.ai)
+
+Diga:
+> O sistema pode gerar imagens foto-realistas de alta qualidade para os fundos dos seus slides usando Inteligência Artificial (modelo FLUX.2). 
+> Para a qualidade máxima (nível agência), recomendamos usar a sua própria chave da **Fal.ai** (custa centavos por imagem). 
+> 
+> Você quer adicionar a sua chave da Fal.ai agora? Se não quiser, não tem problema — o sistema usará um gerador gratuito alternativo ou você pode fazer layouts sem imagem.
+
+Aguarde a resposta.
+
+**Se o usuário disser sim:**
+Diga: "Ótimo. Por favor, cole a sua chave de API da Fal.ai aqui. Se tiver dúvidas, o vídeo de instalação no repositório mostra como criar a conta e pegar a chave em 2 minutos."
+Aguarde a chave. Quando receber, modifique ou crie o arquivo `config/.env` adicionando a linha `FAL_KEY=chave_do_usuario`.
+Atualize o log: `[x] Fal.ai configurada`.
+
+**Se o usuário disser não (ou quiser usar o grátis):**
+Diga: "Sem problemas! O sistema vai usar nosso motor de imagens secundário 100% gratuito. A qualidade é um pouco menor e mais artística, mas funciona para testar a ferramenta."
+Adicione ou crie o `config/.env` com a linha `FAL_KEY=` vazia para registrar a escolha.
+Atualize o log: `[x] Imagens configuradas (Modo Gratuito)`.
+
+---
+
+### Fase 6 — Telegram (opcional, recomendado)
 
 Diga:
 > Uma última coisa — e recomendo muito: quer receber os carrosséis direto no Telegram assim que ficarem prontos? É simples de configurar e muda muito o fluxo de uso. Você literalmente pede um carrossel e ele chega no seu celular.

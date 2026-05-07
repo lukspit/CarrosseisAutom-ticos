@@ -11,6 +11,7 @@ Você conversa, o sistema gera os slides em PNG prontos para postar. Se quiser, 
 - Sistema completo de geração de carrosséis dentro do Claude Code
 - Framework de copy baseado em pesquisa real de carrosséis de alto engajamento no Instagram
 - Identidade visual da sua marca aplicada automaticamente em cada carrossel
+- Layouts dinâmicos com imagens ultra-realistas de inteligência artificial (motor FLUX.2 integrado)
 - Slides renderizados em PNG 1080x1350 (formato nativo 4:5 do Instagram)
 - Entrega opcional direto no Telegram
 
@@ -21,6 +22,7 @@ Você conversa, o sistema gera os slides em PNG prontos para postar. Se quiser, 
 - [Claude Code](https://claude.ai/code) instalado (extensão do VS Code ou app)
 - Assinatura ativa da Anthropic (plano Pro ou acima)
 - [Node.js](https://nodejs.org) instalado (versão 18 ou superior)
+- *(Recomendado)* Conta na [Fal.ai](https://fal.ai) com créditos para geração das imagens de fundo (custa menos de um centavo por imagem). Caso não tenha, o sistema usa um fallback gratuito.
 
 ---
 

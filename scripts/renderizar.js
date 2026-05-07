@@ -92,10 +92,16 @@ async function renderizar() {
       deviceScaleFactor: 1,
     });
 
-    // Lê o HTML, injeta foto de perfil se necessário, e carrega como conteúdo
+    // Lê o HTML e injeta a foto de perfil (base64)
     const htmlBruto = fs.readFileSync(htmlPath, 'utf-8');
     const html = injetarFoto(htmlBruto);
-    await page.setContent(html, { waitUntil: 'networkidle0' });
+    
+    // Sobrescreve o arquivo com a versão injetada temporariamente
+    fs.writeFileSync(htmlPath, html);
+
+    // Carrega o arquivo local via protocolo file:// para que caminhos relativos de imagens funcionem
+    const fileUrl = 'file://' + path.resolve(htmlPath);
+    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
 
     // Aguarda carregamento de fontes
     await page.evaluateHandle('document.fonts.ready');
