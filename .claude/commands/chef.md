@@ -271,22 +271,23 @@ Mostre ao usuário as principais variáveis geradas (cores e fontes). Não peça
 ### Fase 5 — Configuração de Imagens (Fal.ai)
 
 Diga:
-> O sistema pode gerar imagens foto-realistas de alta qualidade para os fundos dos seus slides usando Inteligência Artificial (modelo FLUX.2). 
-> Para a qualidade máxima (nível agência), recomendamos usar a sua própria chave da **Fal.ai** (custa centavos por imagem). 
+> Temos duas rotas para produzir seus carrosséis:
+> **Rota A (Premium):** O carrossel terá fotografias hiper-realistas intercaladas com os textos. Para isso, recomendamos usar sua chave da API da Fal.ai (custa centavos por imagem).
+> **Rota B (Clássica):** O carrossel será 100% focado em design tipográfico (apenas texto, geometria e cores).
 > 
-> Você quer adicionar a sua chave da Fal.ai agora? Se não quiser, não tem problema — o sistema usará um gerador gratuito alternativo ou você pode fazer layouts sem imagem.
+> Você quer adicionar a sua chave da Fal.ai agora para ativar a Rota A? Se não quiser, não tem problema — o sistema ficará na Rota B ou usará um motor gratuito.
 
 Aguarde a resposta.
 
 **Se o usuário disser sim:**
 Diga: "Ótimo. Por favor, cole a sua chave de API da Fal.ai aqui. Se tiver dúvidas, o vídeo de instalação no repositório mostra como criar a conta e pegar a chave em 2 minutos."
 Aguarde a chave. Quando receber, modifique ou crie o arquivo `config/.env` adicionando a linha `FAL_KEY=chave_do_usuario`.
-Atualize o log: `[x] Fal.ai configurada`.
+Atualize o log: `[x] Rota A configurada (Fal.ai)`.
 
 **Se o usuário disser não (ou quiser usar o grátis):**
-Diga: "Sem problemas! O sistema vai usar nosso motor de imagens secundário 100% gratuito. A qualidade é um pouco menor e mais artística, mas funciona para testar a ferramenta."
+Diga: "Sem problemas! O sistema vai focar na Rota B (design tipográfico) ou usar um motor de imagens secundário 100% gratuito."
 Adicione ou crie o `config/.env` com a linha `FAL_KEY=` vazia para registrar a escolha.
-Atualize o log: `[x] Imagens configuradas (Modo Gratuito)`.
+Atualize o log: `[x] Rota B ativada (Sem Fal.ai)`.
 
 ---
 

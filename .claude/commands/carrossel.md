@@ -1,117 +1,69 @@
-# /carrossel — Geração de Carrossel
+# /carrossel — Produção do Carrossel
 
-Gera um carrossel completo para Instagram: copy, design HTML, geração de imagens via IA (Fal.ai/Pollinations) e renderização PNG.
-
-Pode ser chamado com tema: `/carrossel produtividade`
-Ou sem tema: `/carrossel` (Claude pergunta)
+Gera o produto final: copy, planejamento de arte, imagens (se Rota A), código HTML e renderização.
+Comando base: `/carrossel [tema]` ou apenas `/carrossel`.
 
 ---
 
-## Pré-condições — verifique antes de tudo
+## Passo a Passo Metodológico
 
-Antes de qualquer geração:
+A esteira de produção deve seguir esta exata ordem lógica. Abrace o contexto de Diretor de Arte definido no `AGENTS.md`.
 
-1. `marca/perfil.md` existe e tem conteúdo? → Leia o arquivo
-2. `marca/sistema-visual.css` tem variáveis CSS? → Leia o arquivo
-3. `pesquisa/instagram-framework.md` tem conteúdo? → Leia o arquivo
-4. `node_modules/` existe? → `ls node_modules 2>/dev/null | head -3`
+### Fase 1: Entendimento
+- Leia `AGENTS.md` (Para absorver sua persona e a diferença entre Rota A e Rota B).
+- Leia `marca/perfil.md` e `pesquisa/instagram-framework.md` (Para ancorar a narrativa).
+- Leia `marca/sistema-visual.css` (Para conhecer a paleta).
+- Verifique silenciosamente o arquivo `config/.env` para definir se você está operando na Rota A (FAL_KEY presente) ou Rota B.
+- Se o tema não foi fornecido pelo usuário, pergunte qual é.
 
-Se algum desses estiver faltando, informe o que falta e ofereça fazer o setup: "Antes de criar o carrossel, precisamos configurar [o que faltou]. Isso leva 10 minutos. Pode ser agora?"
+### Fase 2: Planejamento (Apresentação ao Cliente)
+Desenvolva a copy seguindo os frameworks do Instagram.
+Baseado na sua Rota (A ou B), planeje como será o visual de cada slide.
 
----
+**Se Rota A:** Planeje "slide sim, slide não" de imagens. Escreva o prompt de fotografia (em inglês, cinematic, sem forçar textos) apenas para os slides que terão imagem.
+**Se Rota B:** Planeje todos os slides focados em tipografia e impacto geométrico.
 
-## Sequência de geração
-
-### Passo 1 — Leitura obrigatória
-
-Leia silenciosamente:
-- `AGENTS.md` (Absorva 100% as regras da seção de "Arquitetura de Layouts" e "Slides COM Imagem" vs "SEM Imagem")
-- `marca/perfil.md`
-- `marca/sistema-visual.css`
-- `pesquisa/instagram-framework.md`
-
-Verifique: `ls marca/foto.* 2>/dev/null` — existe foto de perfil? Guarde esse estado para usar no slide final.
-
-### Passo 2 — Confirmação do tema e objetivo
-
-Se o tema não foi passado, pergunte:
-> "Qual o tema do carrossel? E o objetivo principal: educar, gerar autoridade, ou converter?"
-
-Se já foi passado, apenas confirme o objetivo com 1 pergunta.
-Aguarde a resposta.
-
-### Passo 3 — Geração de Copy e Planejamento de Layout (interno)
-
-Crie o copy completo e, **OBRIGATORIAMENTE**, defina qual dos 4 Layouts Visuais (descritos no AGENTS.md) cada slide vai usar.
-**REGRA DE OURO:** "Slide sim, slide não". Não coloque imagens em todos os slides. Um carrossel de 7 slides deve ter no máximo 3 ou 4 imagens. O restante DEVE ser "Minimalista" (só texto).
-
-- **Slide 1 (hook):** Layout Obrigatório: `Hero Fade`. (Requer prompt de IA).
-- **Slides do meio:** Intercale. Exemplo: S2 Minimalista, S3 Split Lateral, S4 Minimalista, S5 Split Horizontal...
-- **Slide final (CTA):** Normalmente `Minimalista` para focar na conversão.
-
-### Passo 4 — Apresentação para aprovação
-
-Apresente o resultado pro usuário aprovar nestes moldes exatos:
-
+Apresente o seu rascunho de Direção de Arte para o usuário aprovar:
 ```
-**Slide 1 (Hook)**
-- Layout: Hero Fade
-- Prompt IA: [Seu prompt em inglês, hiper-realista, cinematic, etc. Sem pedir textos na imagem]
-- Copy: [texto do slide]
+**Slide 1**
+[Se Rota A, mostre o Prompt da Foto].
+Copy: [texto]
 
 **Slide 2**
-- Layout: Minimalista (Sem imagem)
-- Copy: [texto do slide]
-
-**Slide 3**
-- Layout: Split Lateral
-- Prompt IA: [Seu prompt em inglês]
-- Copy: [texto do slide]
+Layout: Tipográfico/Respiro
+Copy: [texto]
 ```
+Pergunte: "O que achou da narrativa e da direção de arte? Posso prosseguir para a produção?" Aguarde a resposta.
 
-Após apresentar, pergunte: "O copy e as ideias de imagens estão boas? Quer mudar algo antes de eu gerar o código e os fundos?"
-Aguarde aprovação ou ajuste.
+### Fase 3: Produção de Ativos (APENAS ROTA A)
+Se você estiver na Rota A, as imagens planejadas precisam existir antes do código HTML.
+1. Crie o arquivo `output/temp/carrossel-[tema]/prompts.json` contendo os prompts planejados na Fase 2.
+2. Rode o comando no terminal:
+   `node scripts/gerar-imagens-carrossel.js output/temp/carrossel-[tema]/prompts.json output/carrossel-[tema]/images`
+3. Acompanhe a execução no terminal. Só avance para a Fase 4 quando tiver certeza de que os arquivos `.png` estão salvos fisicamente.
 
-### Passo 5 — Geração do JSON de Prompts
+*Se você estiver na Rota B, pule esta fase inteira.*
 
-Crie um arquivo JSON com os prompts apenas para os slides que usarão imagem.
-Salve em: `output/temp/carrossel-[tema-slug]/prompts.json`
+### Fase 4: Codificação (HTML Self-Contained)
+Agora você vai materializar a Direção de Arte em código, criando um HTML 1080x1350 para cada slide na pasta `output/carrossel-[tema]/`.
 
-```json
-[
-  { "nomeArquivo": "slide-01.png", "prompt": "..." },
-  { "nomeArquivo": "slide-03.png", "prompt": "..." }
-]
-```
+**Se o slide exige uma Foto (Rota A):**
+O HTML deve abraçar a foto (`./images/slide-XX.png`).
+- Ou o Hero Fade (Foto cover com `<div class="overlay">` de gradiente dark no bottom para leitura).
+- Ou Split (Foto de um lado, fundo sólido do outro).
+*Aviso Estético:* Não suje a fotografia com SVGs ou glows da marca. A foto é suficiente.
 
-### Passo 6 — Download das Imagens
+**Se o slide é Tipográfico (Rota B ou "Respiro"):**
+O HTML deve criar riqueza visual apenas com CSS e formas.
+- Use a cor de fundo da marca.
+- Crie focos de luz (radial-gradient) atrás de títulos importantes.
+- Use linhas de acento (border-left), texturas sutis CSS e ícones SVG minimalistas (Stripe-style).
 
-Rode o script que baixa as imagens (usando a Fal.ai ou o fallback):
-`node scripts/gerar-imagens-carrossel.js output/temp/carrossel-[tema-slug]/prompts.json output/carrossel-[tema-slug]/images`
+*Nota Final do Slide:* Verifique se `marca/foto.*` existe. Se sim, injete `__FOTO_PERFIL__` no HTML do último slide (o renderizador cuida do resto).
 
-Aguarde o comando terminar. Informe o usuário se ocorreu algum erro. Se der erro, pergunte o que ele prefere fazer antes de gerar o HTML.
+### Fase 5: Entrega (Puppeteer)
+Com os HTMLs e Imagens(se Rota A) salvos na pasta final, transforme o código em arte.
+Para cada slide criado, rode:
+`node scripts/renderizar.js output/carrossel-[tema]/slide-0[N].html output/carrossel-[tema]/slide-0[N].png`
 
-### Passo 7 — Geração de HTML
-
-Crie o HTML de cada slide e salve DIRETAMENTE em `output/carrossel-[tema-slug]/slide-0[N].html`.
-
-**REGRAS CRÍTICAS DE DESIGN:**
-- Você é obrigado a codificar o HTML de acordo com o Layout definido no Passo 4.
-- **Se for Hero Fade ou Split:** Use a tag `<img src="./images/slide-0X.png">` ou `background-image: url('./images/slide-0X.png')`. **É PROIBIDO** colocar Glow, texturas pontilhadas ou SVGs abstratos por cima. A foto gerada pela IA e o fundo de contraste são suficientes.
-- **Se for Minimalista:** NÃO cite arquivos na pasta `/images`. O slide deve ser 100% focado no CSS da marca, usando cores de fundo sólidas, adicionando Glows no texto, linhas de detalhe, SVGs minimalistas (Stripe-style).
-
-*Dica Técnica:* O tamanho do carrossel é cravado em 1080x1350. Sem barra de rolagem. As fontes devem ser importadas via CDN e referenciadas em `--fonte-principal`. Use `__FOTO_PERFIL__` no último slide.
-
-### Passo 8 — Renderização via Puppeteer
-
-Transforme os HTMLs em PNG rodando (para cada slide):
-`node scripts/renderizar.js output/carrossel-[tema-slug]/slide-0[N].html output/carrossel-[tema-slug]/slide-0[N].png`
-
-Avise o usuário que está renderizando.
-
-### Passo 9 — Entrega
-
-Ao final, se o `.env` possuir credenciais do Telegram (TELEGRAM_TOKEN preenchido), pergunte:
-> "Os [N] slides foram gerados em `output/carrossel-[tema]/`. Quer que eu envie direto para o seu Telegram agora?"
-
-Se o Telegram não estiver configurado, apenas confirme o sucesso na pasta local.
+Por fim, pergunte ao cliente se ele deseja que você envie os PNGs finais via Telegram (caso a chave exista no `.env`).
