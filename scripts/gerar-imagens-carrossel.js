@@ -42,11 +42,12 @@ async function baixarImagem(url, caminhoDestino) {
 async function gerarImagemFal(prompt, caminhoSaida) {
   const apiKey = process.env.FAL_KEY;
   if (!apiKey || apiKey.trim() === '') {
-    console.log(`FAL_KEY não configurada. Usando fallback gratuito (Pollinations.ai) para ${path.basename(caminhoSaida)}...`);
+    console.log(`⚠️ FAL_KEY não configurada no .env.`);
+    console.log(`➡️ Usando fallback gratuito (Pollinations.ai) para ${path.basename(caminhoSaida)}...`);
     return gerarImagemPollinations(prompt, caminhoSaida);
   }
 
-  console.log(`Gerando imagem PREMIUM via Fal.ai para: ${path.basename(caminhoSaida)}...`);
+  console.log(`🌟 Gerando imagem PREMIUM via Fal.ai para: ${path.basename(caminhoSaida)}...`);
 
   try {
     const url = 'https://fal.run/fal-ai/flux/schnell';
@@ -66,20 +67,21 @@ async function gerarImagemFal(prompt, caminhoSaida) {
       })
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      console.error("❌ Erro na API do Fal.ai. Tentando fallback gratuito...", data);
+      const errorText = await response.text();
+      console.error(`❌ Erro na API do Fal.ai (Status ${response.status}): ${errorText}`);
+      console.log(`➡️ Tentando fallback gratuito (Pollinations.ai)...`);
       return gerarImagemPollinations(prompt, caminhoSaida);
     }
 
+    const data = await response.json();
     const imageUrl = data.images[0].url;
     await baixarImagem(imageUrl, caminhoSaida);
     console.log(`✅ Imagem PREMIUM salva: ${caminhoSaida}`);
     
   } catch (error) {
-    console.error(`Erro ao gerar imagem na Fal.ai para ${caminhoSaida}:`, error.message);
-    console.log("Tentando fallback gratuito...");
+    console.error(`❌ Erro fatal ao tentar gerar imagem na Fal.ai para ${caminhoSaida}:`, error.message);
+    console.log(`➡️ Tentando fallback gratuito (Pollinations.ai)...`);
     return gerarImagemPollinations(prompt, caminhoSaida);
   }
 }

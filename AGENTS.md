@@ -104,43 +104,33 @@ O slide é visto no celular. Texto pequeno é invisível. Use estas escalas mín
 **Mínimo de texto por slide.**
 Se precisar de mais de 3 linhas para comunicar a ideia do slide, a ideia não está clara o suficiente. Corte. Sintetize. Reformule.
 
-**Camada visual: obrigatória em todos os slides.**
-Todo slide deve ter pelo menos estes três elementos visuais além do texto:
+**Arquitetura de Layouts (4 Opções Padrão) e Frequência.**
+Na hora de gerar o HTML de cada slide, você deve obrigatoriamente usar uma destas 4 arquiteturas de layout.
+**Regra de Ouro da Frequência:** Intercale imagens! Tente seguir um padrão de "slide sim, slide não" para imagens. Não coloque imagem em todos os slides, isso polui a leitura. O Slide 1 (Hook) DEVE ter imagem.
+O carrossel deve transitar organicamente entre os modelos abaixo:
 
-1. **Textura de fundo** — grid sutil com `linear-gradient` (opacity 0.03–0.06, tamanho 60–80px). Nunca fundo sólido liso.
-2. **Glow** — pelo menos um `radial-gradient` com a cor primária da marca (opacity 0.08–0.15), posicionado para guiar o olho em direção ao texto principal.
-3. **Linha de acento** — horizontal, vertical ou diagonal (2–4px, cor primária, opacity 0.35–0.6). Pode ser separador, borda lateral de card, ou elemento decorativo.
+**Modelos COM IMAGEM (Protagonismo da foto gerada pela IA)**
+*Aviso Crítico:* Para estes slides, NÃO use SVGs geométricos, texturas de fundo mirabolantes, dots ou blocos de cor. A foto gerada pela IA é a arte. Use apenas um overlay escuro (gradient) sobre a foto para garantir o contraste da tipografia.
+1. **Hero Fade (Slide 1/Hook ou Fechamento):** Imagem ocupa 100% do background (`object-fit: cover`). Você DEVE colocar uma `div` de overlay com `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 80%)` ancorada no fundo. O texto e título ficam na parte inferior (bottom) garantindo leitura perfeita.
+2. **Split Lateral (50/50):** Divisão `display: flex` ou `grid`. Metade esquerda (ou direita) é a imagem gerada cobrindo 100% da altura (`object-fit: cover`). A outra metade é fundo sólido com o texto centralizado.
+3. **Split Horizontal (Top/Bottom):** Imagem na metade superior ocupando 50% da altura (`height: 50vh; object-fit: cover`), e texto com fundo sólido na metade inferior.
 
-Outros elementos recomendados (use pelo menos um por slide):
-- Contador de slide no canto superior direito (`01 / 07`)
-- Anéis ou círculos concêntricos ao fundo (border, opacity baixa)
-- Pontos espalhados (dots, 3–6px, opacity 0.15–0.4)
-- Watermark em texto grande e transparente ao fundo (palavra-chave do slide, opacity 0.03–0.06)
-- Colchetes de canto (`┌` `┘`) como moldura sutil
+**Modelos SEM IMAGEM (Protagonismo da Tipografia e Geometria)**
+*Aviso Crítico:* Use estes layouts para dar respiro (slide sim, slide não). Nestes slides você DEVE aplicar a Identidade Visual Clássica:
+4. **Minimalista (Tipografia Massiva):** Fundo sólido escuro/gradient. Neste layout, você é obrigado a usar:
+   - *Glow:* `radial-gradient` sutil com a cor primária (opacity 0.10) focado no texto principal.
+   - *Acentos Geométricos:* Linhas de 2-4px, colchetes de canto (`┌` `┘`), ou blocos de cor `border-left: 5px solid [cor-primária]`.
+   - *Opcional:* Se a ideia for forte, crie um SVG minimalista estilo Stripe/Vercel (ex: um cadeado simples, barras conectadas). Nunca clipart.
 
-**Elemento ilustrativo SVG (recomendado em slides-chave).**
-Para slides com conceito central claro (segurança, produtividade, sistema, fluxo), gere um SVG inline que representa esse conceito geometricamente. Estética: Stripe/Linear/Vercel — minimalista, geométrico, sem clipart. Exemplos:
-- Segurança: shield com path simples, cadeado geométrico
-- Sistema/fluxo: nós conectados por linhas, diagrama de blocos
-- Dados/resultados: barras, seta ascendente estilizada
-- Processo: círculos conectados, seta em loop
-Tamanho: 100–180px. Posição: canto superior/inferior ou como watermark leve. Cor: primária da marca ou branco com opacity baixa.
-
-**Bloco de cor (slides do meio, não no slide 1 nem no último).**
-Nos slides 2–N-1, quebre o ritmo visual com blocos de acento:
-- Card com `border-left: 5px solid [cor-primária]` sobre fundo levemente mais claro que o fundo principal
-- Ou faixa horizontal com background na cor primária e texto invertido (branco/preto)
-- Cria hierarquia, evita monotonia de texto solto no fundo escuro
+**Engenharia de Prompts para Imagens (Fal.ai FLUX.2)**
+Sempre que você escolher um layout COM imagem (Hero, Split Lateral, Split Horizontal), você criará o respectivo prompt JSON. Siga estas regras:
+- **Idioma:** Sempre escreva os prompts em INGLÊS.
+- **Estilo:** Pense como um diretor de fotografia. Os prompts devem focar em iluminação, humor e composição ("cinematic lighting, photorealistic, 8k, dramatic shadows").
+- **Assunto:** Descreva cenários concretos, objetos, texturas ou ações abstratas que representem o tema do slide de forma elegante. Não fique restrito a descrever uma "pessoa" sempre, varie! Pode ser uma mesa arrumada, uma sala sombria, um detalhe macro, um ambiente de trabalho iluminado.
+- **Texto:** A inteligência da FLUX consegue criar textos razoáveis se você quiser, mas não force a barra nem apoie a mensagem nisso. A prioridade é a imagem estética.
 
 **Acentuação: sempre correta no HTML.**
 Todos os slides usam `<meta charset="UTF-8">` — portanto escreva sempre com acentos corretos: "não", "é", "também", "automático", "básico", "requisição". Nunca substitua por versão sem acento.
-
-**Arquitetura de Layouts (4 Opções Padrão).**
-Na hora de gerar o HTML de cada slide, você deve obrigatoriamente usar uma destas 4 arquiteturas de layout (intercalando para criar dinamismo):
-1. **Hero Fade (Slide 1/Hook ou Fechamento):** Imagem ocupa 100% do background (`object-fit: cover`). Você DEVE colocar uma `div` de overlay com `linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 80%)` ancorada no fundo. O texto e título ficam na parte inferior (bottom) garantindo leitura perfeita sobre o fundo preto/escuro.
-2. **Split Lateral (50/50):** Divisão `display: flex` ou `grid`. Metade esquerda (ou direita) é a imagem gerada cobrindo 100% da altura (`object-fit: cover`). A outra metade é fundo sólido com o texto centralizado.
-3. **Split Horizontal (Top/Bottom):** Imagem na metade superior ocupando 50% da altura (`height: 50vh; object-fit: cover`), e texto com fundo sólido na metade inferior.
-4. **Minimalista (Sem Imagem):** Fundo sólido/gradient sutil sem imagem, apenas tipografia massiva. Ideal para citações curtas ou CTA final.
 
 **HTML gerado: self-contained.**
 Cada arquivo HTML de slide deve funcionar completamente sozinho. CSS inline com `<style>` dentro do `<head>`. Sem imports de arquivos externos (exceto Google Fonts via CDN). Sem JavaScript. Use caminhos relativos para imagens locais (ex: `./images/slide-01.png`), pois o script de renderização vai carregá-las nativamente.
