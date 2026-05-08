@@ -60,7 +60,8 @@ async function gerarImagemFal(prompt, caminhoSaida) {
       },
       body: JSON.stringify({
         prompt: prompt,
-        image_size: "portrait_4_5", // 1080x1350 approx
+        width: 1080,
+        height: 1350,
         num_inference_steps: 4,
         num_images: 1,
         enable_safety_checker: false

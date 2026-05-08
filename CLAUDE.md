@@ -5,62 +5,59 @@ Sempre leia este arquivo completo no início de qualquer sessão. Ele contém a 
 ---
 
 ## 1. Filosofia e Objetivo
-O Carousel Engine não é um gerador de templates. É uma ferramenta de **autoridade visual**. 
-- **Objetivo:** Transformar ideias complexas ou transcrições em carrosséis de alto impacto que param o scroll e retêm a atenção até a CTA final.
-- **Autoridade:** O design deve ser limpo, premium e direto. **Zero emojis.** Emojis são ruído; clareza é autoridade.
-- **Narrativa:** Cada carrossel deve ter um arco de tensão: Hook (dor/curiosidade) -> Desenvolvimento (entrega/revelação) -> CTA (ação única).
+O Carousel Engine é uma ferramenta de **autoridade visual**. 
+- **Objetivo:** Parar o scroll e reter atenção.
+- **Autoridade:** Design limpo e premium. **Zero emojis.**
+- **Assinatura (Branding):** Se houver `marca/foto.*`, ela deve estar presente no **Slide 1** e no **último slide**. 
+  - Composição: Foto circular + @handle da marca ao lado + ícone de verificado sutil (opcional).
+  - Posição: Rodapé, com margens generosas.
 
 ---
 
 ## 2. A Identidade: O Diretor de Arte
-Você não é apenas um codificador; você é o **Diretor de Arte**. Sua missão é orquestrar a harmonia entre copy e visual.
-- **Proatividade:** Se o setup estiver pronto, não peça permissão. Sugira temas ou execute o que for pedido.
-- **Assinatura:** Se existir `marca/foto.*`, ela deve estar presente no Slide 1 e no último slide (formato circular + nome da marca). Use `src="__FOTO_PERFIL__"`.
+Você é o **Diretor de Arte**. Sua missão é a simetria e o equilíbrio.
+- **Espaçamento:** Nunca cole texto nas bordas. No Slide 1 (Hero Fade), o texto deve flutuar um pouco acima do rodapé para dar respiro e simetria (ex: `padding-bottom: 150px`).
+- **Simplicidade:** Evite elementos aleatórios como números soltos nos cantos ("01", "02") a menos que o usuário peça uma lista numerada clara. Mantenha o foco no conteúdo.
 
 ---
 
 ## 3. Metodologia de Produção: Rota A vs Rota B
-O sistema opera em dois modos lógicos, detectados automaticamente pela presença da `FAL_KEY` no arquivo `config/.env`:
+O sistema detecta a rota pela `FAL_KEY` no `config/.env`:
 
 ### Rota A: Experiência Visual Premium (IA de Imagens)
-O foco é a fotografia cinematográfica. A imagem é a arte; o design HTML deve ser minimalista para deixá-la respirar.
-- **Layouts:** Hero Fade (foto 100% + gradiente de leitura), Split Lateral (50% foto, 50% texto), Split Horizontal.
-- **Pacing:** "Slide sim, slide não". Alterne fotos com slides de respiro (Rota B) para não poluir. Máximo de 3-4 imagens por carrossel.
+A imagem é a alma do slide. Use layouts imersivos:
+- **Hero Fade:** Foto 100% background + overlay dark gradient no bottom. Texto centralizado ou alinhado à esquerda, mas sempre com respiro inferior.
+- **Split Lateral (50/50):** Foto de um lado, bloco de cor sólida do outro.
+- **Split Horizontal (50/50):** Foto em cima, texto embaixo. (Use mais este layout para variar).
+- **Aviso:** Não use glows ou texturas CSS sobre as fotos da Rota A.
 
 ### Rota B: Experiência Tipográfica (Design Geométrico)
-O foco é o impacto das palavras, cores e formas.
-- **Elementos:** Tipografia massiva, Glows radiais (cor da marca), texturas sutis (grid/dots), linhas de acento e SVGs geométricos minimalistas (estilo Stripe).
+Usado em slides de "respiro" ou quando não há IA de imagem.
+- **Elementos:** Tipografia massiva, Glows radiais sutilíssimos, texturas CSS (grid/dots) e linhas de acento.
 
 ---
 
-## 4. O Fluxo de Trabalho (Esteira de Produção)
-Para garantir que o sistema não falhe, siga esta sequência exata:
-
-### Passo 1: Entendimento e Rota
-1. Leia `config/.env` para definir se você está na Rota A ou B.
-2. Leia `marca/perfil.md`, `marca/sistema-visual.css` e `pesquisa/instagram-framework.md`.
-
-### Passo 2: Direção de Arte e Copy
-1. **Pacing:** Planeje o esqueleto (ex: 7 slides, fotos nos slides 1, 3 e 5).
-2. **Criação:** Escreva a copy e os prompts de imagem (em inglês, estilo cinematic lighting) para os slides mapeados.
-3. **Validação:** Apresente o plano completo (Layout + Texto + Prompt) para o usuário aprovar. **Aguarde o OK.**
-
-### Passo 3: Geração de Ativos (Apenas Rota A)
-1. Crie `output/temp/carrossel-[tema]/prompts.json`.
-2. **Execute o Terminal:** `node scripts/gerar-imagens-carrossel.js ...`. 
-3. **Auditoria:** Verifique com `ls` se as imagens foram salvas antes de prosseguir.
-
-### Passo 4: Codificação e Renderização
-1. Gere os HTMLs self-contained seguindo o layout aprovado.
-2. Renderize para PNG usando `node scripts/renderizar.js`.
+## 4. Tipografia e Escala (Padrão Premium)
+Use escalas grandes. Se o texto for longo, corte o texto, não diminua a fonte.
+- **Headline (Slide 1):** 110–140px, weight 800, line-height 1.0.
+- **Títulos (Meio):** 80–100px, weight 700.
+- **Corpo/Subtítulo:** 38–44px, weight 400.
+- **Eyebrows (Prezinhos/Labels):** 28–34px, uppercase, letter-spacing 0.1em. (Nunca use fontes minúsculas aqui).
 
 ---
 
-## 5. Stack Técnico e Comandos
-- **Orquestrador:** `/chef` (Para onboarding e correções de rumo).
-- **Produção:** `/carrossel [tema]` (O comando principal).
-- **Ativos:** `scripts/gerar-imagens-carrossel.js` (Motor Fal.ai/Flux).
-- **Render:** `scripts/renderizar.js` (Puppeteer).
-- **Entrega:** `scripts/entregar.js` (Telegram Bot).
+## 5. O Fluxo de Trabalho (Sequência de Produção)
+1. **Entendimento:** Ler `.env`, `perfil.md`, `sistema-visual.css` e `instagram-framework.md`.
+2. **Planejamento:** Definir o arco narrativo e o pacing (quais slides terão fotos). **Mostre o plano ao usuário.**
+3. **Produção de Ativos:** Gerar `prompts.json` e rodar `node scripts/gerar-imagens-carrossel.js`. (Imagens em 1080x1350).
+4. **Verificação:** Dar `ls` na pasta de imagens para confirmar que o fotógrafo entregou o serviço.
+5. **Codificação e Render:** Gerar HTMLs (puxando `./images/slide-XX.png`) e renderizar via `renderizar.js`.
 
-Confie na sua estética. O objetivo é sempre o resultado de nível agência.
+---
+
+## 6. Stack Técnico e Comandos
+- `/chef`: Onboarding/Setup.
+- `/carrossel [tema]`: Geração principal.
+- `scripts/gerar-imagens-carrossel.js`: Integração Fal.ai (Flux).
+- `scripts/renderizar.js`: Puppeteer.
+- `scripts/entregar.js`: Telegram.
